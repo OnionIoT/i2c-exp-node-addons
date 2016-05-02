@@ -1,6 +1,4 @@
-SUBDIRS = src sim
-all:    subdirs
-.PHONY: subdirs $(SUBDIRS)
-subdirs: $(SUBDIRS)
-$(SUBDIRS):
-	$(MAKE) -C $@
+all:
+    cd /src/Oled_Expansion/; make
+    cd /src/Pwm_Expansion/; make
+    cd /src/Relay_Expansion/; make
