@@ -15,8 +15,7 @@ CXXFLAGS := -g # -Wall
 #INC := $(shell find $(INCDIR) -maxdepth 1 -type d -exec echo -I {}  \;)
 
 $(TARGET): 
-	node-gyp clean configure --arch=mips --verbose rebuild
-
+	node-gyp clean configure --arch=mips --target=v4.3.1 --verbose rebuild
 #$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 #    @mkdir -p $(dir $@)
 #    @echo " $(CXX) $(CXXFLAGS) $(INC) -c -o $@ $<"; $(CXX) $(CXXFLAGS) $(INC) -c -o $@ $<
