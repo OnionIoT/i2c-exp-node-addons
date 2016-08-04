@@ -143,7 +143,7 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
   char * writable = new char[str.size() + 1];
   std::copy(str.begin(), str.end(), writable);
   writable[str.size()] = '\0';
-  int a = oledWriteChar(*writable); 
+  int a = oledWriteChar(*writable);
   Local<Number> num = Number::New(isolate, a);
   delete[] writable;
   args.GetReturnValue().Set(num);
@@ -155,7 +155,7 @@ void write(const FunctionCallbackInfo<Value>& args) {
   char * writable = new char[str.size() + 1];
   std::copy(str.begin(), str.end(), writable);
   writable[str.size()] = '\0';
-  int a = oledWrite(writable); 
+  int a = oledWrite(writable);
   Local<Number> num = Number::New(isolate, a);
   delete[] writable;
   args.GetReturnValue().Set(num);
@@ -241,7 +241,7 @@ void readLcdFile(const FunctionCallbackInfo<Value>& args) {
 	delete[] writable;
 	Local<Number> num = Number::New(isolate, status);
     args.GetReturnValue().Set(num);
-	
+
 }
 
 void readLcdData(const FunctionCallbackInfo<Value>& args) {
@@ -269,7 +269,7 @@ void readLcdData(const FunctionCallbackInfo<Value>& args) {
 	delete[] writable;
 	Local<Number> num = Number::New(isolate, status);
 	args.GetReturnValue().Set(num);
-	
+
 }
 
 void init(Local<Object> exports) {
@@ -280,30 +280,30 @@ void init(Local<Object> exports) {
   NODE_SET_METHOD(exports, "init", oledInit);
   NODE_SET_METHOD(exports, "checkInit", checkInit);
   NODE_SET_METHOD(exports, "clear", clear);
-  
+
 //configuration
-  NODE_SET_METHOD(exports, "setDisplayPower", setDisplayPower);	
-  NODE_SET_METHOD(exports, "setDisplayMode", setDisplayMode);	
-  NODE_SET_METHOD(exports, "setBrightness", setBrightness);	
-  NODE_SET_METHOD(exports, "setDim", setDim);	
-  NODE_SET_METHOD(exports, "setMemoryMode", setMemoryMode);	
-  NODE_SET_METHOD(exports, "setCursor", setCursor);	
-  NODE_SET_METHOD(exports, "setCursorByPixel", setCursorByPixel);	
-  NODE_SET_METHOD(exports, "setColumnAddressing", setColumnAddressing);	
-  NODE_SET_METHOD(exports, "setTextColumns", setTextColumns);	
-  NODE_SET_METHOD(exports, "setImageColumns", setImageColumns);	
+  NODE_SET_METHOD(exports, "setDisplayPower", setDisplayPower);
+  NODE_SET_METHOD(exports, "setDisplayMode", setDisplayMode);
+  NODE_SET_METHOD(exports, "setBrightness", setBrightness);
+  NODE_SET_METHOD(exports, "setDim", setDim);
+  NODE_SET_METHOD(exports, "setMemoryMode", setMemoryMode);
+  NODE_SET_METHOD(exports, "setCursor", setCursor);
+  NODE_SET_METHOD(exports, "setCursorByPixel", setCursorByPixel);
+  NODE_SET_METHOD(exports, "setColumnAddressing", setColumnAddressing);
+  NODE_SET_METHOD(exports, "setTextColumns", setTextColumns);
+  NODE_SET_METHOD(exports, "setImageColumns", setImageColumns);
 
 //writing to the display
-  NODE_SET_METHOD(exports, "writeChar", writeChar);	
-  NODE_SET_METHOD(exports, "write", write);		
-  NODE_SET_METHOD(exports, "writeByte", writeByte);	
-  //NODE_SET_METHOD(exports, "draw", draw);	
+  NODE_SET_METHOD(exports, "writeChar", writeChar);
+  NODE_SET_METHOD(exports, "write", write);
+  NODE_SET_METHOD(exports, "writeByte", writeByte);
+  //NODE_SET_METHOD(exports, "draw", draw);
 //scroll the display
-  NODE_SET_METHOD(exports, "scroll", scroll);		
-  NODE_SET_METHOD(exports, "scrollDiagonal", scrollDiagonal);	
-  NODE_SET_METHOD(exports, "scrollStop", scrollStop);	
+  NODE_SET_METHOD(exports, "scroll", scroll);
+  NODE_SET_METHOD(exports, "scrollDiagonal", scrollDiagonal);
+  NODE_SET_METHOD(exports, "scrollStop", scrollStop);
 //reading lcd data
-  NODE_SET_METHOD(exports, "readLcdFile", readLcdFile);	
+  NODE_SET_METHOD(exports, "readLcdFile", readLcdFile);
   NODE_SET_METHOD(exports, "readLcdData", readLcdData);
 
 }
