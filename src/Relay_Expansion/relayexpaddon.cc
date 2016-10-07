@@ -34,7 +34,16 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
- 
+
+void getChannel(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+  int value1 = args[0]->IntegerValue();
+  int value2 = args[1]->IntegerValue();
+  int state;
+  int a = relayReadChannel(value1,value2,&state);
+  Local<Number> num = Number::New(isolate, state);
+  args.GetReturnValue().Set(num);
+}
 
 
 void setChannel(const FunctionCallbackInfo<Value>& args) {
@@ -45,7 +54,6 @@ void setChannel(const FunctionCallbackInfo<Value>& args) {
   int a = relaySetChannel(value1,value2,value3);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
-	
 }
 
 void setAllChannels(const FunctionCallbackInfo<Value>& args) {
@@ -62,7 +70,7 @@ void init(Local<Object> exports) {
   NODE_SET_METHOD(exports, "checkInit", checkInit);
   NODE_SET_METHOD(exports, "setChannel", setChannel);
   NODE_SET_METHOD(exports, "setAllChannels", setAllChannels);
-
+  NODE_SET_METHOD(exports, "getChannel", getChannel);
 }
 //This defines the entry point for the addon
 NODE_MODULE(addon, init)

@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    RED.nodes.registerType('relay-exp-write',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:"relay-exp-write"},
+            address: {value:"0"},
+            channel: {value:"0"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"relay-exp-write";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="relay-exp-write">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-address"><i class="icon-tag"></i> I2C Address</label>
+        <input type="number" id="node-input-address" min="0" max="7" placeholder="0">
+        <label for="node-input-channel"><i class="icon-tag"></i> Relay Channel</label>
+        <input type="number" id="node-input-channel" min="0" max="1" placeholder="0">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="relay-exp-write">
+    <p>A node to read relay expansion states </p>
+</script>
