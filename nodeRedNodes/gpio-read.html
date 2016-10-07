@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    RED.nodes.registerType('gpio-read',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:"gpio-read"},
+            pin: {value:"0"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"gpio-read";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="gpio-read">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-pin"><i class="icon-tag"></i> Pin</label>
+        <input type="number" id="node-input-pin" min="0" max="7" placeholder="0">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="gpio-read">
+    <p>A node to read Gpios </p>
+</script>
