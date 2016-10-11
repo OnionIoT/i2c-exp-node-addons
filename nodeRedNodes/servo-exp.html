@@ -1,0 +1,42 @@
+<script type="text/javascript">
+    RED.nodes.registerType('servo-exp',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:"servo-exp"},
+            channel: {value:"0"},
+            t0: {value:"0.001"},
+            t180: {value:"0.003"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"servo-exp";
+        }
+    });
+</script>
+
+<style>
+    .form-row label{
+        display: inherit;
+        width: 200px;
+    }
+</style>
+
+<script type="text/x-red" data-template-name="servo-exp">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel" placeholder="0">
+        <label for="node-input-t0"><i class="icon-tag"></i> Min Pulse Width</label>
+        <input type="text" id="node-input-t0" placeholder="0">
+        <label for="node-input-t180"><i class="icon-tag"></i> Max Pulse Width</label>
+        <input type="text" id="node-input-t180" placeholder="0">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="servo-exp">
+    <p>A node to control the servo expansion </p>
+</script>

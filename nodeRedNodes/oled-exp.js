@@ -28,6 +28,8 @@ module.exports = function(RED) {
                     oledAddon.scrollDiagonal(0,5,0,127,1,0,7);
                 }else if(msg.payload.scroll == 'up-right'){
                     oledAddon.scrollDiagonal(1,5,0,127,1,0,7);
+                }else if(msp.payload.scroll == 'stop'){
+                    oledAddon.scrollStop();
                 }else{
                     console.log("Unrecognized scroll parameter, expected left||right||up-left||up-right");
                 }
@@ -36,7 +38,12 @@ module.exports = function(RED) {
                 // 0 or 1
                 if((msg.payload.dim == 1) || (msg.payload.dim == 0)){
                     oledAddon.setDim(msg.payload.dim);
-                }else{
+                }else if(msg.payload.dim == true){
+                    oledAddon.setDim(1);
+                }else if(msg.payload.dim == false){
+                    oledAddon.setDim(0);
+                }
+                else{
                     console.log("Unrecognized dim parameter, expected 1 or 0");
                 }
             }
@@ -44,7 +51,11 @@ module.exports = function(RED) {
                 // 0 or 1
                 if((msg.payload.invert == 1) || (msg.payload.invert == 0)){
                     oledAddon.setDisplayMode(msg.payload.invert);
-                } else{
+                }else if(msg.payload.invert == true){
+                    oledAddon.setDisplayMode(1);
+                }else if(msg.payload.invert == false){
+                    oledAddon.setDisplayMode(0);
+                }else{
                     console.log("Unrecognized dim parameter, expected 1 or 0");
                 }
             }

@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    RED.nodes.registerType('oled-exp-clear',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:"oled-exp-clear"},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"oled-exp-clear";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="oled-exp-clear">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="oled-exp-clear">
+    <p>A node to clear the oled expansion </p>
+</script>

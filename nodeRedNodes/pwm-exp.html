@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pwm-exp',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:"pwm-exp"},
+            channel: {value:"0"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"pwm-exp";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="pwm-exp">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-channel"><i class="icon-tag"></i> PWM Channel</label>
+        <input type="text" id="node-input-channel" placeholder="0">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="pwm-exp">
+    <p>A node to control the pwm expansion </p>
+</script>
