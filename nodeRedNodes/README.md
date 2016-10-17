@@ -20,7 +20,7 @@ The following sections describe the expected inputs, outputs, configurations of 
 
 ## gpio-read
 
-Reads the state of a specified gpio.
+Reads the state of a specified gpio. This node puts the specified gpio into a high impedance input state.
 
 ### Config
 

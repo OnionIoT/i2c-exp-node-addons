@@ -2,7 +2,11 @@ var relayAddon = require("/usr/bin/relay-exp-addon");
 module.exports = function(RED) {
     function RelayExpNodeRead(config) {
         RED.nodes.createNode(this,config);
-        relayAddon.init(config.address);
+        address = parseInt(config.address);
+        if(address > 30){
+            address = address - 32;
+        }
+        relayAddon.init(address);
         var node = this;
         this.on('input', function(msg) {
             var result = relayAddon.getChannel(config.address,config.channel);
