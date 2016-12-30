@@ -51,6 +51,7 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
   int value1 = args[0]->IntegerValue();
   int value2 = args[1]->IntegerValue();
   Local<Function> cb = Local<Function>::Cast(args[2]);
+  const unsigned argc = 1;
   int state;
   int a = relayReadChannel(value1,value2,&state);
   Local<Value> argv[argc] = { Number::New(isolate, a) };
@@ -66,6 +67,7 @@ void setChannel(const FunctionCallbackInfo<Value>& args) {
   int value2 = args[1]->IntegerValue();
   int value3 = args[2]->IntegerValue();
   Local<Function> cb = Local<Function>::Cast(args[3]);
+  const unsigned argc = 1;
   int a = relaySetChannel(value1,value2,value3);
   Local<Value> argv[argc] = { Number::New(isolate, a) };
   cb->Call(Null(isolate), argc, argv);
@@ -78,6 +80,7 @@ void setAllChannels(const FunctionCallbackInfo<Value>& args) {
   int value1 = args[0]->IntegerValue();
   int value2 = args[1]->IntegerValue();
   Local<Function> cb = Local<Function>::Cast(args[2]);
+  const unsigned argc = 1;
   int a = relaySetAllChannels(value1,value2);
   Local<Value> argv[argc] = { Number::New(isolate, a) };
   cb->Call(Null(isolate), argc, argv);  
