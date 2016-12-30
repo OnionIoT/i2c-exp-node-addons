@@ -11,6 +11,9 @@ uint8_t	*buffer;
 
 
 namespace demo {
+
+using v8::Null;
+using v8::Function;
 using v8::Exception;
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -26,6 +29,10 @@ void oledInit(const FunctionCallbackInfo<Value>& args) {
   //Add init oled-display here
   Isolate* isolate = args.GetIsolate();
   int a = oledDriverInit();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 
@@ -35,6 +42,10 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
   //Add checkinit oled-display here
   Isolate* isolate = args.GetIsolate();
   int a = oledCheckInit();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 
@@ -44,6 +55,10 @@ void clear(const FunctionCallbackInfo<Value>& args) {
   //Add clear oled-display here
   Isolate* isolate = args.GetIsolate();
   int a = oledClear();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 
@@ -55,6 +70,10 @@ void setDisplayPower(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int value = args[0]->IntegerValue();
   int a = oledSetDisplayPower(value);
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -64,6 +83,10 @@ void setDisplayMode(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int value = args[0]->IntegerValue();
   int a = oledSetDisplayMode(value);
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -73,6 +96,10 @@ void setBrightness(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int value = args[0]->IntegerValue();
   int a = oledSetBrightness(value);
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -81,6 +108,10 @@ void setDim(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int value = args[0]->IntegerValue();
   int a = oledSetDim(value);
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -89,6 +120,10 @@ void setMemoryMode(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int value = args[0]->IntegerValue();
   int a = oledSetMemoryMode(value);
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -98,6 +133,10 @@ void setCursor(const FunctionCallbackInfo<Value>& args) {
   int value1 = args[0]->IntegerValue();
   int value2 = args[1]->IntegerValue();
   int a = oledSetCursor(value1,value2);
+  Local<Function> cb = Local<Function>::Cast(args[2]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -107,6 +146,10 @@ void setCursorByPixel(const FunctionCallbackInfo<Value>& args) {
   int value1 = args[0]->IntegerValue();
   int value2 = args[1]->IntegerValue();
   int a = oledSetCursorByPixel(value1,value2);
+  Local<Function> cb = Local<Function>::Cast(args[2]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -116,6 +159,10 @@ void setColumnAddressing(const FunctionCallbackInfo<Value>& args) {
   int value1 = args[0]->IntegerValue();
   int value2 = args[1]->IntegerValue();
   int a = oledSetColumnAddressing(value1,value2);
+  Local<Function> cb = Local<Function>::Cast(args[2]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -123,6 +170,10 @@ void setTextColumns(const FunctionCallbackInfo<Value>& args) {
   //Add setTextColumns here
   Isolate* isolate = args.GetIsolate();
   int a = oledSetTextColumns();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -130,6 +181,10 @@ void setImageColumns(const FunctionCallbackInfo<Value>& args) {
   //Add setImageColumns here
   Isolate* isolate = args.GetIsolate();
   int a = oledSetImageColumns();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -143,7 +198,11 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
   char * writable = new char[str.size() + 1];
   std::copy(str.begin(), str.end(), writable);
   writable[str.size()] = '\0';
-  int a = oledWriteChar(*writable); 
+  int a = oledWriteChar(*writable);
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv); 
   Local<Number> num = Number::New(isolate, a);
   delete[] writable;
   args.GetReturnValue().Set(num);
@@ -156,6 +215,10 @@ void write(const FunctionCallbackInfo<Value>& args) {
   std::copy(str.begin(), str.end(), writable);
   writable[str.size()] = '\0';
   int a = oledWrite(writable); 
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   delete[] writable;
   args.GetReturnValue().Set(num);
@@ -166,6 +229,10 @@ void writeByte(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int value = args[0]->IntegerValue();
   int a = oledWriteByte(value);
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -191,6 +258,10 @@ void scroll(const FunctionCallbackInfo<Value>& args) {
   int value3 = args[2]->IntegerValue();
   int value4 = args[3]->IntegerValue();
   int a = oledScroll(value1,value2,value3,value4);
+  Local<Function> cb = Local<Function>::Cast(args[4]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -204,12 +275,20 @@ void scrollDiagonal(const FunctionCallbackInfo<Value>& args) {
   int value6 = args[5]->IntegerValue();
   int value7 = args[6]->IntegerValue();
   int a = oledScrollDiagonal(value1,value2,value3,value4,value5,value6,value7);
+  Local<Function> cb = Local<Function>::Cast(args[7]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
 void scrollStop(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int a = oledScrollStop();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -238,6 +317,10 @@ void readLcdFile(const FunctionCallbackInfo<Value>& args) {
 			printf("> Deallocating buffer array\n");
 			free(buffer);
 		}
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, status) };
+  cb->Call(Null(isolate), argc, argv);
 	delete[] writable;
 	Local<Number> num = Number::New(isolate, status);
     args.GetReturnValue().Set(num);
@@ -266,6 +349,10 @@ void readLcdData(const FunctionCallbackInfo<Value>& args) {
 			printf("> Deallocating buffer array\n");
 			free(buffer);
 		}
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, status) };
+  cb->Call(Null(isolate), argc, argv);
 	delete[] writable;
 	Local<Number> num = Number::New(isolate, status);
 	args.GetReturnValue().Set(num);
