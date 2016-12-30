@@ -54,7 +54,7 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
   const unsigned argc = 1;
   int state;
   int a = relayReadChannel(value1,value2,&state);
-  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  Local<Value> argv[argc] = { Number::New(isolate, state) };
   cb->Call(Null(isolate), argc, argv);
   // Local<Number> num = Number::New(isolate, state);
   // args.GetReturnValue().Set(num);
