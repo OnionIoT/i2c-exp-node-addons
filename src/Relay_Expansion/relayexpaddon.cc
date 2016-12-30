@@ -28,8 +28,8 @@ void relayInit(const FunctionCallbackInfo<Value>& args) {
   const unsigned argc = 1;
   Local<Value> argv[argc] = { Number::New(isolate, a) };
   cb->Call(Null(isolate), argc, argv);
-  // Local<Number> num = Number::New(isolate, a);
-  // args.GetReturnValue().Set(num);
+  Local<Number> num = Number::New(isolate, a);
+  args.GetReturnValue().Set(num);
 }
 
 
@@ -42,8 +42,8 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
   const unsigned argc = 1;
   Local<Value> argv[argc] = { Number::New(isolate, binit) };
   cb->Call(Null(isolate), argc, argv);
-  // Local<Number> num = Number::New(isolate, binit);
-  // args.GetReturnValue().Set(num);
+  Local<Number> num = Number::New(isolate, binit);
+  args.GetReturnValue().Set(num);
 }
 
 void getChannel(const FunctionCallbackInfo<Value>& args) {
@@ -56,8 +56,8 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
   int a = relayReadChannel(value1,value2,&state);
   Local<Value> argv[argc] = { Number::New(isolate, state) };
   cb->Call(Null(isolate), argc, argv);
-  // Local<Number> num = Number::New(isolate, state);
-  // args.GetReturnValue().Set(num);
+  Local<Number> num = Number::New(isolate, state);
+  args.GetReturnValue().Set(num);
 }
 
 
@@ -71,8 +71,8 @@ void setChannel(const FunctionCallbackInfo<Value>& args) {
   int a = relaySetChannel(value1,value2,value3);
   Local<Value> argv[argc] = { Number::New(isolate, a) };
   cb->Call(Null(isolate), argc, argv);
-  // Local<Number> num = Number::New(isolate, a);
-  // args.GetReturnValue().Set(num);
+  Local<Number> num = Number::New(isolate, a);
+  args.GetReturnValue().Set(num);
 }
 
 void setAllChannels(const FunctionCallbackInfo<Value>& args) {
@@ -84,8 +84,8 @@ void setAllChannels(const FunctionCallbackInfo<Value>& args) {
   int a = relaySetAllChannels(value1,value2);
   Local<Value> argv[argc] = { Number::New(isolate, a) };
   cb->Call(Null(isolate), argc, argv);  
-  // Local<Number> num = Number::New(isolate, a);
-  // args.GetReturnValue().Set(num);
+  Local<Number> num = Number::New(isolate, a);
+  args.GetReturnValue().Set(num);
 }
 
 void init(Local<Object> exports) {
