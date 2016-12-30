@@ -21,7 +21,11 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int binit;
   int a = pwmCheckInit(&binit);
-  Local<Number> num = Number::New(isolate, a);
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, binit) };
+  cb->Call(Null(isolate), argc, argv);
+  Local<Number> num = Number::New(isolate, binit);
   args.GetReturnValue().Set(num);
 }
 
@@ -29,6 +33,10 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
 void driverInit(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int a = pwmDriverInit();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 
@@ -38,6 +46,10 @@ void driverInit(const FunctionCallbackInfo<Value>& args) {
 void disableChip(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int a = pwmDisableChip();
+  Local<Function> cb = Local<Function>::Cast(args[0]);
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 }
@@ -45,7 +57,11 @@ void disableChip(const FunctionCallbackInfo<Value>& args) {
 void setFrequency(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   double value1 = args[0]->NumberValue();
+  Local<Function> cb = Local<Function>::Cast(args[1]);
+  const unsigned argc = 1;
   int a = pwmSetFrequency(value1);
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 
@@ -55,7 +71,11 @@ void setupDriver(const FunctionCallbackInfo<Value>& args) {
   int value1 = args[0]->IntegerValue();
   double value2 = args[1]->NumberValue();
   double value3 = args[2]->NumberValue();
+  Local<Function> cb = Local<Function>::Cast(args[3]);
+  const unsigned argc = 1;
   int a = pwmSetupDriver(value1,value2,value3);
+  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, a);
   args.GetReturnValue().Set(num);
 
