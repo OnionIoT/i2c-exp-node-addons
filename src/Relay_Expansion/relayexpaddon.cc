@@ -22,13 +22,13 @@ using v8::Value;
 
 void relayInit(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
-  int value = args[0]->IntegerValue();
-  int a = relayDriverInit(value);
+  int addr = args[0]->IntegerValue();
+  int ret = relayDriverInit(addr);
   Local<Function> cb = Local<Function>::Cast(args[1]);
   const unsigned argc = 1;
-  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  Local<Value> argv[argc] = { Number::New(isolate, ret) };
   cb->Call(Null(isolate), argc, argv);
-  Local<Number> num = Number::New(isolate, a);
+  Local<Number> num = Number::New(isolate, ret);
   args.GetReturnValue().Set(num);
 }
 
@@ -36,24 +36,24 @@ void relayInit(const FunctionCallbackInfo<Value>& args) {
 void checkInit(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int addr = args[0]->IntegerValue();
-  int binit;
-  int a = relayCheckInit(addr, &binit);
+  int bInit;
+  int ret = relayCheckInit(addr, &bInit);
   Local<Function> cb = Local<Function>::Cast(args[1]);
   const unsigned argc = 1;
-  Local<Value> argv[argc] = { Number::New(isolate, binit) };
+  Local<Value> argv[argc] = { Number::New(isolate, bInit) };
   cb->Call(Null(isolate), argc, argv);
-  Local<Number> num = Number::New(isolate, binit);
+  Local<Number> num = Number::New(isolate, bInit);
   args.GetReturnValue().Set(num);
 }
 
 void getChannel(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
-  int value1 = args[0]->IntegerValue();
-  int value2 = args[1]->IntegerValue();
+  int addr = args[0]->IntegerValue();
+  int channel = args[1]->IntegerValue();
   Local<Function> cb = Local<Function>::Cast(args[2]);
   const unsigned argc = 1;
   int state;
-  int a = relayReadChannel(value1,value2,&state);
+  int ret = relayReadChannel(addr,channel,&state);
   Local<Value> argv[argc] = { Number::New(isolate, state) };
   cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, state);
@@ -63,28 +63,28 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
 
 void setChannel(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
-  int value1 = args[0]->IntegerValue();
-  int value2 = args[1]->IntegerValue();
-  int value3 = args[2]->IntegerValue();
+  int addr = args[0]->IntegerValue();
+  int channel = args[1]->IntegerValue();
+  int state = args[2]->IntegerValue();
   Local<Function> cb = Local<Function>::Cast(args[3]);
   const unsigned argc = 1;
-  int a = relaySetChannel(value1,value2,value3);
-  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  int ret = relaySetChannel(addr,channel,state);
+  Local<Value> argv[argc] = { Number::New(isolate, ret) };
   cb->Call(Null(isolate), argc, argv);
-  Local<Number> num = Number::New(isolate, a);
+  Local<Number> num = Number::New(isolate, ret);
   args.GetReturnValue().Set(num);
 }
 
 void setAllChannels(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
-  int value1 = args[0]->IntegerValue();
-  int value2 = args[1]->IntegerValue();
+  int addr = args[0]->IntegerValue();
+  int state = args[1]->IntegerValue();
   Local<Function> cb = Local<Function>::Cast(args[2]);
   const unsigned argc = 1;
-  int a = relaySetAllChannels(value1,value2);
-  Local<Value> argv[argc] = { Number::New(isolate, a) };
+  int ret = relaySetAllChannels(addr,state);
+  Local<Value> argv[argc] = { Number::New(isolate, ret) };
   cb->Call(Null(isolate), argc, argv);  
-  Local<Number> num = Number::New(isolate, a);
+  Local<Number> num = Number::New(isolate, ret);
   args.GetReturnValue().Set(num);
 }
 
