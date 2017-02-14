@@ -1,4 +1,4 @@
-// oledexpnodeaddon.cc
+// oled-exp-addon.cc
 #include <node.h>
 #include <v8.h>
 #include <oled-exp.h>
@@ -106,7 +106,6 @@ void clear(const FunctionCallbackInfo<Value>& args) {
 //    true - setting state successful
 //    false - failed to set state
 void setDisplayPower(const FunctionCallbackInfo<Value>& args) {
-	//// read in the arguments
 	Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
@@ -325,8 +324,8 @@ void setMemoryMode(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void setCursor(const FunctionCallbackInfo<Value>& args) {
-    //Add set-Cursor here
-    Isolate* isolate = args.GetIsolate();
+  //Add set-Cursor here
+  Isolate* isolate = args.GetIsolate();
 	// Check the number of arguments passed.
 	if (args.Length() < 2) {
 		// Throw an Error that is passed back to JavaScript
@@ -342,12 +341,12 @@ void setCursor(const FunctionCallbackInfo<Value>& args) {
 		return;
 	}
 	// read in the value arguments
-    int row = args[0]->IntegerValue();
-    int column = args[1]->IntegerValue();
+  int row = args[0]->IntegerValue();
+  int column = args[1]->IntegerValue();
 
 	// perform the C library operation
-    int ret = oledSetCursor(row, column);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledSetCursor(row, column);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 2) {
@@ -357,7 +356,7 @@ void setCursor(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledSetCursorByPixel() Function
@@ -369,7 +368,7 @@ void setCursor(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void setCursorByPixel(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
 	if (args.Length() < 2) {
@@ -387,12 +386,12 @@ void setCursorByPixel(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// read in the value arguments
-    int row = args[0]->IntegerValue();
-    int pixel = args[1]->IntegerValue();
+  int row = args[0]->IntegerValue();
+  int pixel = args[1]->IntegerValue();
 
 	// perform the C library operation
-    int ret = oledSetCursorByPixel(row, pixel);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledSetCursorByPixel(row, pixel);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 2) {
@@ -402,7 +401,7 @@ void setCursorByPixel(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledSetColumnAddressing() Function
@@ -414,7 +413,7 @@ void setCursorByPixel(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void setColumnAddressing(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
 	if (args.Length() < 2) {
@@ -432,12 +431,12 @@ void setColumnAddressing(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// read in the value arguments
-    int startPixel = args[0]->IntegerValue();
-    int endPixel = args[1]->IntegerValue();
+  int startPixel = args[0]->IntegerValue();
+  int endPixel = args[1]->IntegerValue();
 
 	// perform the C library operation
-    int ret = oledSetColumnAddressing(startPixel, endPixel);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledSetColumnAddressing(startPixel, endPixel);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 2) {
@@ -447,7 +446,7 @@ void setColumnAddressing(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledSetDim() Function
@@ -457,11 +456,11 @@ void setColumnAddressing(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void setTextColumns(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// perform the C library operation
-    int ret = oledSetTextColumns();
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledSetTextColumns();
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 0) {
@@ -471,7 +470,7 @@ void setTextColumns(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledSetImageColumns() Function
@@ -482,11 +481,11 @@ void setTextColumns(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void setImageColumns(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// perform the C library operation
-    int ret = oledSetImageColumns();
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledSetImageColumns();
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 0) {
@@ -496,7 +495,7 @@ void setImageColumns(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 
@@ -508,7 +507,7 @@ void setImageColumns(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void writeChar(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
 	if (args.Length() < 1) {
@@ -519,15 +518,15 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// parses the argument into c-string
-    v8::String::Utf8Value s(args[0]);
-    std::string str(*s);
-    char* character = new char[str.size() + 1];
-    std::copy(str.begin(), str.end(), character);
-    character[str.size()] = '\0';
+  v8::String::Utf8Value s(args[0]);
+  std::string str(*s);
+  char* character = new char[str.size() + 1];
+  std::copy(str.begin(), str.end(), character);
+  character[str.size()] = '\0';
 
 	// perform the C library operation
-    int ret = oledWriteChar(*character);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledWriteChar(*character);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 1) {
@@ -538,8 +537,8 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// leak prevention
-    delete[] character;
-    args.GetReturnValue().Set(retVal);
+  delete[] character;
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledWrite() Function
@@ -550,7 +549,7 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void write(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
 	if (args.Length() < 1) {
@@ -561,15 +560,15 @@ void write(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// parses the argument into c-string
-    v8::String::Utf8Value s(args[0]);
-    std::string str(*s);
-    char *msg = new char[str.size() + 1];
-    std::copy(str.begin(), str.end(), msg);
-    msg[str.size()] = '\0';
+  v8::String::Utf8Value s(args[0]);
+  std::string str(*s);
+  char *msg = new char[str.size() + 1];
+  std::copy(str.begin(), str.end(), msg);
+  msg[str.size()] = '\0';
 
 	// perform the C library operation
-    int ret = oledWrite(msg);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledWrite(msg);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 1) {
@@ -580,8 +579,8 @@ void write(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// leak prevention
-    delete[] msg;
-    args.GetReturnValue().Set(retVal);
+  delete[] msg;
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledWriteByte() Function
@@ -593,8 +592,8 @@ void write(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void writeByte(const FunctionCallbackInfo<Value>& args) {
-    //Add set-Memory-Mode here
-    Isolate* isolate = args.GetIsolate();
+  //Add set-Memory-Mode here
+  Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
 	if (args.Length() < 1) {
@@ -612,11 +611,11 @@ void writeByte(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// read in the value arguments
-    int byte = args[0]->IntegerValue();
+  int byte = args[0]->IntegerValue();
 
 	// perform the C library operation
-    int ret = oledWriteByte(byte);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledWriteByte(byte);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 1) {
@@ -626,7 +625,7 @@ void writeByte(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 /**
  *void draw(const FunctionCallbackInfo<Value>& args) {
@@ -654,7 +653,7 @@ void writeByte(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void scroll(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
 	if (args.Length() < 4) {
@@ -665,25 +664,24 @@ void scroll(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// Check the argument types
-	if (!args[0]->IsNumber()
-		!args[1]->IsNumber() ||
-		!args[2]->IsNumber() ||
-		!args[3]->IsNumber()) {
-
+	if (!args[0]->IsNumber() ||
+  		!args[1]->IsNumber() ||
+  		!args[2]->IsNumber() ||
+  		!args[3]->IsNumber()) {
 		isolate->ThrowException(Exception::TypeError(
 		String::NewFromUtf8(isolate, "Wrong argument type")));
 		return;
 	}
 
 	// read in the value arguments
-    int direction = args[0]->IntegerValue();
-    int scrollSpeed = args[1]->IntegerValue();
-    int startPage = args[2]->IntegerValue();
-    int stopPage = args[3]->IntegerValue();
+  int direction = args[0]->IntegerValue();
+  int scrollSpeed = args[1]->IntegerValue();
+  int startPage = args[2]->IntegerValue();
+  int stopPage = args[3]->IntegerValue();
 
 	// perform the C library operation
-    int ret = oledScroll(direction, scrollSpeed, startPage, stopPage);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledScroll(direction, scrollSpeed, startPage, stopPage);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 4) {
@@ -693,7 +691,7 @@ void scroll(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledScrollDiagonal() Function
@@ -711,7 +709,7 @@ void scroll(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void scrollDiagonal(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// Check the number of arguments passed.
 	if (args.Length() < 7) {
@@ -723,12 +721,12 @@ void scrollDiagonal(const FunctionCallbackInfo<Value>& args) {
 
 	// Check the argument types
 	if (!args[0]->IsNumber() ||
-		!args[1]->IsNumber() ||
-		!args[2]->IsNumber() ||
-		!args[3]->IsNumber() ||
-		!args[4]->IsNumber() ||
-		!args[5]->IsNumber() ||
-		!args[6]->IsNumber()) {
+  		!args[1]->IsNumber() ||
+  		!args[2]->IsNumber() ||
+  		!args[3]->IsNumber() ||
+  		!args[4]->IsNumber() ||
+  		!args[5]->IsNumber() ||
+  		!args[6]->IsNumber()) {
 
 		isolate->ThrowException(Exception::TypeError(
 		String::NewFromUtf8(isolate, "Wrong argument type")));
@@ -736,19 +734,19 @@ void scrollDiagonal(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// read in the value arguments
-    int direction = args[0]->IntegerValue();
-    int scrollSpeed = args[1]->IntegerValue();
-    int fixedRows = args[2]->IntegerValue();
-    int scrollRows = args[3]->IntegerValue();
-    int verticalOffset = args[4]->IntegerValue();
-    int startPage = args[5]->IntegerValue();
-    int stopPage = args[6]->IntegerValue();
+  int direction = args[0]->IntegerValue();
+  int scrollSpeed = args[1]->IntegerValue();
+  int fixedRows = args[2]->IntegerValue();
+  int scrollRows = args[3]->IntegerValue();
+  int verticalOffset = args[4]->IntegerValue();
+  int startPage = args[5]->IntegerValue();
+  int stopPage = args[6]->IntegerValue();
 
 	// perform the C library operation
-    int ret = oledScrollDiagonal(direction, scrollSpeed,
-			fixedRows, scrollRows, verticalOffset,
-			startPage, stopPage);
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledScrollDiagonal(direction, scrollSpeed,
+		fixedRows, scrollRows, verticalOffset,
+		startPage, stopPage);
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 7) {
@@ -758,7 +756,7 @@ void scrollDiagonal(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledScrollStop() Function
@@ -768,11 +766,11 @@ void scrollDiagonal(const FunctionCallbackInfo<Value>& args) {
 //    true - operation successful
 //    false - operation failed
 void scrollStop(const FunctionCallbackInfo<Value>& args) {
-    Isolate* isolate = args.GetIsolate();
+  Isolate* isolate = args.GetIsolate();
 
 	// perform the C library operation
-    int ret = oledScrollStop();
-    Local<Number> retVal = Number::New(isolate, ret);
+  int ret = oledScrollStop();
+  Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
 	if (args.Length() > 0) {
@@ -782,7 +780,7 @@ void scrollStop(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-    args.GetReturnValue().Set(retVal);
+  args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledReadLcdFile() Function
@@ -814,14 +812,16 @@ void readLcdFile(const FunctionCallbackInfo<Value>& args) {
 	file[str.size()] = '\0';
 
 	// call the C lib Read function
-	int retVal = oledReadLcdFile(file,buffer);
+	int ret = oledReadLcdFile(file,buffer);
 
 	// check for file r/w errors, then call the C lib draw function
-	if (retVal == EXIT_SUCCESS) {
-		retVal	= oledDraw(buffer, OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8);
+	if (ret == EXIT_SUCCESS) {
+		ret	= oledDraw(buffer, OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8);
 	} else {
 		printf("ERROR: Cannot draw invalid data\n");
 	}
+
+  Local<Number> retVal  = Number::New(isolate, ret);
 
 	// deallocate buffer
 	if (buffer != NULL) {
@@ -839,30 +839,51 @@ void readLcdFile(const FunctionCallbackInfo<Value>& args) {
 
 	delete[] file;
 	args.GetReturnValue().Set(retVal);
-
 }
 
+
+// NodeJS wrapper for C oledReadLcdData() Function
+//  arguments:
+//    data - string - string of bytes to draw directly to the screen
+//    callback - function (optional)
+//  returns:
+//    true - reading string successful
+//    false - failed to read string
 void readLcdData(const FunctionCallbackInfo<Value>& args) {
 	Isolate* isolate = args.GetIsolate();
 
-	// TODO: error check args length
+
+	// Check the number of arguments passed.
+	if (args.Length() < 1) {
+		// Throw an Error that is passed back to JavaScript
+		isolate->ThrowException(Exception::TypeError(
+  		String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
 
 	//buffer is a global variable and path is passed in as a string
 	buffer 	=(uint8_t*)malloc(OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8 * sizeof *buffer);
+
+	// read in the value arguments, parse to v8::String, then std::string
 	v8::String::Utf8Value s(args[0]);
 	std::string str(*s);
+
+  // create c-string of data
 	char * data = new char[str.size() + 1];
 	std::copy(str.begin(), str.end(), data);
 	data[str.size()] = '\0';
-	int retVal = oledReadLcdData(data,buffer);
-	Local<Number> retVal = Number::New(isolate, status);
 
-	if (status == EXIT_SUCCESS) {
-		status	= oledDraw(buffer, OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8);
+  // call the C lib function with formatted data
+	int ret = oledReadLcdData(data,buffer);
+
+	if (ret == EXIT_SUCCESS) {
+		ret	= oledDraw(buffer, OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8);
 	}
 	else {
 		printf( "ERROR: Cannot draw invalid data\n");
 	}
+
+	Local<Number> retVal = Number::New(isolate, ret);
 
 	// deallocate memory for the buffer
 	if (buffer != NULL) {
@@ -874,10 +895,11 @@ void readLcdData(const FunctionCallbackInfo<Value>& args) {
 	if (args.Length() > 1) {
 		Local<Function> callback = Local<Function>::Cast(args[1]);
 		const unsigned argc = 1;
-		Local<Value> argv[argc] = { Number::New(isolate, status) };
+		Local<Value> argv[argc] = { retVal };
 		callback->Call(Null(isolate), argc, argv);
 	}
 
+  // leak protection
 	delete[] data;
 	args.GetReturnValue().Set(retVal);
 

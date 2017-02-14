@@ -1,4 +1,4 @@
-// relayexpaddon.cc
+// relay-exp-addon.cc
 #include <node.h>
 #include <v8.h>
 #include <relay-exp.h>
@@ -154,7 +154,7 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
   if (args.Length() > 2) {
     Local<Function> callback = Local<Function>::Cast(args[2]);
     const unsigned argc = 1;
-    Local<Value> argv[argc] = { Number::New(isolate, state) };
+    Local<Value> argv[argc] = { retVal };
     callback->Call(Null(isolate), argc, argv);
   }
   args.GetReturnValue().Set(retVal);
