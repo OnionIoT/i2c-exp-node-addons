@@ -56,11 +56,11 @@ void relayInit(const FunctionCallbackInfo<Value>& args) {
 
   // handle (optional) callback argument
   if (args.Length() > 1) {
-    // TODO: ensure cb is actually a function
-    Local<Function> cb = Local<Function>::Cast(args[1]);
+    // TODO: ensure callback is actually a function
+    Local<Function> callback = Local<Function>::Cast(args[1]);
     const unsigned argc = 1;
     Local<Value> argv[argc] = { retVal };
-    cb->Call(Null(isolate), argc, argv);
+    callback->Call(Null(isolate), argc, argv);
   }
 
   // return a value
@@ -104,10 +104,10 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
 
   // handle (optional) callback argument
   if (args.Length() > 1) {
-    Local<Function> cb = Local<Function>::Cast(args[1]);
+    Local<Function> callback = Local<Function>::Cast(args[1]);
     const unsigned argc = 1;
     Local<Value> argv[argc] = { retVal };
-    cb->Call(Null(isolate), argc, argv);
+    callback->Call(Null(isolate), argc, argv);
   }
 
   // return a value
@@ -119,18 +119,19 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
   int addr = args[0]->IntegerValue();
   int channel = args[1]->IntegerValue();
 
+  // perform the C library operation
+  int state;
+  int ret = relayReadChannel(addr,channel,&state);
+  Local<Number> retVal  = Number::New(isolate, state);
 
   // handle (optional) callback argument
   if (args.Length() > 2) {
-    Local<Function> cb = Local<Function>::Cast(args[2]);
+    Local<Function> callback = Local<Function>::Cast(args[2]);
     const unsigned argc = 1;
     Local<Value> argv[argc] = { Number::New(isolate, state) };
-    cb->Call(Null(isolate), argc, argv);
+    callback->Call(Null(isolate), argc, argv);
   }
-  int state;
-  int ret = relayReadChannel(addr,channel,&state);
-  Local<Number> num = Number::New(isolate, state);
-  args.GetReturnValue().Set(num);
+  args.GetReturnValue().Set(retVal);
 }
 
 
@@ -140,17 +141,19 @@ void setChannel(const FunctionCallbackInfo<Value>& args) {
   int channel = args[1]->IntegerValue();
   int state = args[2]->IntegerValue();
 
+  // perform the C library operation
+  int ret = relaySetChannel(addr,channel,state);
+  Local<Number> retVal  = Number::New(isolate, ret);
+
   // handle (optional) callback argument
   if (args.Length() > 3) {
-    Local<Function> cb = Local<Function>::Cast(args[3]);
+    Local<Function> callback = Local<Function>::Cast(args[3]);
     const unsigned argc = 1;
-    Local<Value> argv[argc] = { Number::New(isolate, ret) };
-    cb->Call(Null(isolate), argc, argv);
+    Local<Value> argv[argc] = { retVal };
+    callback->Call(Null(isolate), argc, argv);
   }
 
-  int ret = relaySetChannel(addr,channel,state);
-  Local<Number> num = Number::New(isolate, ret);
-  args.GetReturnValue().Set(num);
+  args.GetReturnValue().Set(retVal);
 }
 
 void setAllChannels(const FunctionCallbackInfo<Value>& args) {
@@ -158,17 +161,19 @@ void setAllChannels(const FunctionCallbackInfo<Value>& args) {
   int addr = args[0]->IntegerValue();
   int state = args[1]->IntegerValue();
 
+  // perform the C library operation
   int ret = relaySetAllChannels(addr,state);
+  Local<Number> retVal  = Number::New(isolate, ret);
 
   // handle (optional) callback argument
   if (args.Length() > 2) {
-    Local<Function> cb = Local<Function>::Cast(args[2]);
+    Local<Function> callback = Local<Function>::Cast(args[2]);
     const unsigned argc = 1;
-    Local<Value> argv[argc] = { Number::New(isolate, ret) };
-    cb->Call(Null(isolate), argc, argv);
+    Local<Value> argv[argc] = { retVal };
+    callback->Call(Null(isolate), argc, argv);
   }
 
-  args.GetReturnValue().Set(num);
+  args.GetReturnValue().Set(retVal);
 }
 
 void init(Local<Object> exports) {

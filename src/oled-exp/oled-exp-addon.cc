@@ -502,7 +502,7 @@ void setImageColumns(const FunctionCallbackInfo<Value>& args) {
 
 // NodeJS wrapper for C oledWriteChar() Function
 //  arguments:
-//    writable - string - character to be written, all chars except the first in the string is ignored
+//    character - string - character to be written, all chars except the first in the string is ignored
 //    callback - function (optional)
 //  returns:
 //    true - operation successful
@@ -521,12 +521,12 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
 	// parses the argument into c-string
     v8::String::Utf8Value s(args[0]);
     std::string str(*s);
-    char* writable = new char[str.size() + 1];
-    std::copy(str.begin(), str.end(), writable);
-    writable[str.size()] = '\0';
+    char* character = new char[str.size() + 1];
+    std::copy(str.begin(), str.end(), character);
+    character[str.size()] = '\0';
 
 	// perform the C library operation
-    int ret = oledWriteChar(*writable);
+    int ret = oledWriteChar(*character);
     Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
@@ -538,13 +538,13 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// leak prevention
-    delete[] writable;
+    delete[] character;
     args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledWrite() Function
 //  arguments:
-//    writable - string - string to be written to the screen
+//    msg - string - string to be written to the screen
 //    callback - function (optional)
 //  returns:
 //    true - operation successful
@@ -563,12 +563,12 @@ void write(const FunctionCallbackInfo<Value>& args) {
 	// parses the argument into c-string
     v8::String::Utf8Value s(args[0]);
     std::string str(*s);
-    char *writable = new char[str.size() + 1];
-    std::copy(str.begin(), str.end(), writable);
-    writable[str.size()] = '\0';
+    char *msg = new char[str.size() + 1];
+    std::copy(str.begin(), str.end(), msg);
+    msg[str.size()] = '\0';
 
 	// perform the C library operation
-    int ret = oledWrite(writable);
+    int ret = oledWrite(msg);
     Local<Number> retVal = Number::New(isolate, ret);
 
 	// handle (optional) callback argument
@@ -580,13 +580,13 @@ void write(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// leak prevention
-    delete[] writable;
+    delete[] msg;
     args.GetReturnValue().Set(retVal);
 }
 
 // NodeJS wrapper for C oledWriteByte() Function
 //  arguments:
-//    byte - int - byte to be written to the display 
+//    byte - int - byte to be written to the display
 //					at the current cursor position
 //    callback - function (optional)
 //  returns:
@@ -665,7 +665,7 @@ void scroll(const FunctionCallbackInfo<Value>& args) {
 	}
 
 	// Check the argument types
-	if (!args[0]->IsNumber() 
+	if (!args[0]->IsNumber()
 		!args[1]->IsNumber() ||
 		!args[2]->IsNumber() ||
 		!args[3]->IsNumber()) {
@@ -837,7 +837,7 @@ void readLcdFile(const FunctionCallbackInfo<Value>& args) {
 		callback->Call(Null(isolate), argc, argv);
 	}
 
-	delete[] writable;
+	delete[] file;
 	args.GetReturnValue().Set(retVal);
 
 }
@@ -846,15 +846,15 @@ void readLcdData(const FunctionCallbackInfo<Value>& args) {
 	Isolate* isolate = args.GetIsolate();
 
 	// TODO: error check args length
-	
+
 	//buffer is a global variable and path is passed in as a string
 	buffer 	=(uint8_t*)malloc(OLED_EXP_WIDTH*OLED_EXP_HEIGHT/8 * sizeof *buffer);
 	v8::String::Utf8Value s(args[0]);
 	std::string str(*s);
-	char * writable = new char[str.size() + 1];
-	std::copy(str.begin(), str.end(), writable);
-	writable[str.size()] = '\0';
-	int retVal = oledReadLcdData(writable,buffer);
+	char * data = new char[str.size() + 1];
+	std::copy(str.begin(), str.end(), data);
+	data[str.size()] = '\0';
+	int retVal = oledReadLcdData(data,buffer);
 	Local<Number> retVal = Number::New(isolate, status);
 
 	if (status == EXIT_SUCCESS) {
@@ -877,8 +877,8 @@ void readLcdData(const FunctionCallbackInfo<Value>& args) {
 		Local<Value> argv[argc] = { Number::New(isolate, status) };
 		callback->Call(Null(isolate), argc, argv);
 	}
-		
-	delete[] writable;
+
+	delete[] data;
 	args.GetReturnValue().Set(retVal);
 
 }

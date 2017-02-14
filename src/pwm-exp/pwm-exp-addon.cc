@@ -22,68 +22,77 @@ using v8::Value;
 
 void checkInit(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
+
+    // perform the C library operation
     int bInit;
     int ret = pwmCheckInit(&bInit);
+    Local<Number> retVal = Number::New(isolate, bInit);
 
     // handle (optional) callback argument
     if (args.Length() > 1) {
-        Local<Function> cb = Local<Function>::Cast(args[0]);
+        Local<Function> callback = Local<Function>::Cast(args[0]);
         const unsigned argc = 1;
         Local<Value> argv[argc] = { Number::New(isolate, bInit) };
-        cb->Call(Null(isolate), argc, argv);
+        callback->Call(Null(isolate), argc, argv);
     }
-    Local<Number> num = Number::New(isolate, bInit);
-    args.GetReturnValue().Set(num);
+
+    args.GetReturnValue().Set(retVal);
 }
 
 
 void driverInit(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
+
+    // perform the C library operation
     int ret = pwmDriverInit();
+    Local<Number> retVal = Number::New(isolate, ret);
 
     // handle (optional) callback argument
     if (args.Length() > 0) {
-        Local<Function> cb = Local<Function>::Cast(args[0]);
+        Local<Function> callback = Local<Function>::Cast(args[0]);
         const unsigned argc = 1;
-        Local<Value> argv[argc] = { Number::New(isolate, ret) };
-        cb->Call(Null(isolate), argc, argv);
+        Local<Value> argv[argc] = { retVal };
+        callback->Call(Null(isolate), argc, argv);
     }
-    Local<Number> num = Number::New(isolate, ret);
-    args.GetReturnValue().Set(num);
+    args.GetReturnValue().Set(retVal);
 }
 
 
 void disableChip(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
+
+    // perform the C library operation
     int ret = pwmDisableChip();
+    Local<Number> retVal = Number::New(isolate, ret);
 
     // handle (optional) callback argument
     if (args.Length() > 0) {
-        Local<Function> cb = Local<Function>::Cast(args[0]);
+        Local<Function> callback = Local<Function>::Cast(args[0]);
         const unsigned argc = 1;
-        Local<Value> argv[argc] = { Number::New(isolate, ret) };
-        cb->Call(Null(isolate), argc, argv);
+        Local<Value> argv[argc] = { retVal };
+        callback->Call(Null(isolate), argc, argv);
     }
 
-    Local<Number> num = Number::New(isolate, ret);
-    args.GetReturnValue().Set(num);
+    args.GetReturnValue().Set(retVal);
 }
 
 void setFrequency(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
     double frequency = args[0]->NumberValue();
 
+    // perform the C library operation
+    int ret = pwmSetFrequency(frequency);
+    Local<Number> retVal = Number::New(isolate, ret);
+
     // handle (optional) callback argument
     if (args.Length() > 1) {
-        Local<Function> cb = Local<Function>::Cast(args[1]);
+        Local<Function> callback = Local<Function>::Cast(args[1]);
         const unsigned argc = 1;
-        Local<Value> argv[argc] = { Number::New(isolate, ret) };
-        cb->Call(Null(isolate), argc, argv);
+        Local<Value> argv[argc] = { retVal };
+        callback->Call(Null(isolate), argc, argv);
     }
 
-    int ret = pwmSetFrequency(frequency);
-    Local<Number> num = Number::New(isolate, ret);
-    args.GetReturnValue().Set(num);
+    args.GetReturnValue().Set(retVal);
 
 }
 void setupDriver(const FunctionCallbackInfo<Value>& args) {
@@ -92,17 +101,19 @@ void setupDriver(const FunctionCallbackInfo<Value>& args) {
     double duty = args[1]->NumberValue();
     double delay = args[2]->NumberValue();
 
+    // perform the C library operation
+    int ret = pwmSetupDriver(channel,duty,delay);
+    Local<Number> retVal = Number::New(isolate, ret);
+
     // handle (optional) callback argument
     if (args.Length() > 1) {
-        Local<Function> cb = Local<Function>::Cast(args[3]);
+        Local<Function> callback = Local<Function>::Cast(args[3]);
         const unsigned argc = 1;
-        Local<Value> argv[argc] = { Number::New(isolate, ret) };
-        cb->Call(Null(isolate), argc, argv);
+        Local<Value> argv[argc] = { retVal };
+        callback->Call(Null(isolate), argc, argv);
     }
 
-    int ret = pwmSetupDriver(channel,duty,delay);
-    Local<Number> num = Number::New(isolate, ret);
-    args.GetReturnValue().Set(num);
+    args.GetReturnValue().Set(retVal);
 
 }
 
