@@ -23,7 +23,7 @@ using v8::Boolean;
 
 // NodeJS wrapper for C relayDriverInit() Function
 //  arguments:
-//    address - number - specifies I2C address offset for the Relay Expansion
+//    addr - integer - specifies I2C address offset for the Relay Expansion
 //    callback - function (optional)
 //  returns:
 //    true - successfully initialized
@@ -70,7 +70,7 @@ void relayInit(const FunctionCallbackInfo<Value>& args) {
 
 // NodeJS wrapper for C relayCheckInit() Function
 //  arguments:
-//    address - number - specifies I2C address offset for the Relay Expansion
+//    addr - integer - specifies I2C address offset for the Relay Expansion
 //    callback - function (optional)
 //  returns:
 //    false - not initialized
@@ -114,8 +114,34 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
   args.GetReturnValue().Set(retVal);
 }
 
+// NodeJS wrapper for C relayGetChannel() Function
+//  arguments:
+//    addr - integer - specifies I2C address offset for the Relay Expansion
+//    channel - integer - the channel of the relay to check
+//    callback - function (optional)
+//  returns:
+//    true - relay state is on
+//    false - relay is off
 void getChannel(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
+
+  // Check the number of arguments passed.
+  if (args.Length() < 2) {
+    // Throw an Error that is passed back to JavaScript
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
+
+  // Check the argument types
+  if (!args[0]->IsNumber() ||
+      !args[1]->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong argument type")));
+    return;
+  }
+
+  // read in the value arguments
   int addr = args[0]->IntegerValue();
   int channel = args[1]->IntegerValue();
 
@@ -135,8 +161,36 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
 }
 
 
-void setChannel(const FunctionCallbackInfo<Value>& args) {
+// NodeJS wrapper for C relaySetChannel() Function
+//  arguments:
+//    addr - integer - specifies I2C address offset for the Relay Expansion
+//    channel - integer - specifies which channel of the relay is to be switched
+//    state - boolean - the switch state the channel should be set to
+//    callback - function (optional)
+//  returns:
+//    true - setting state successful
+//    false - setting relay state failed
+void setChannel(const FunctionCallbackInfo<Value>& args) { // TODO: boolean value here for testing purposes
   Isolate* isolate = args.GetIsolate();
+
+  // Check the number of arguments passed.
+  if (args.Length() < 3) {
+    // Throw an Error that is passed back to JavaScript
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
+
+  // Check the argument types
+  if (!args[0]->IsNumber() ||
+      !args[1]->IsNumber() ||
+      !args[2]->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong argument type")));
+    return;
+  }
+
+  // read in the value arguments
   int addr = args[0]->IntegerValue();
   int channel = args[1]->IntegerValue();
   int state = args[2]->IntegerValue();
@@ -156,8 +210,34 @@ void setChannel(const FunctionCallbackInfo<Value>& args) {
   args.GetReturnValue().Set(retVal);
 }
 
+// NodeJS wrapper for C relaySetAllChannels() Function
+//  arguments:
+//    address - integer - specifies I2C address offset for the Relay Expansion
+//    state - boolean - the switch state all channels should be set to
+//    callback - function (optional)
+//  returns:
+//    true - channels successfully set
+//    false - error in setting channels
 void setAllChannels(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
+
+  // Check the number of arguments passed.
+  if (args.Length() < 2) {
+    // Throw an Error that is passed back to JavaScript
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
+
+  // Check the argument types
+  if (!args[0]->IsNumber() ||
+      !args[1]->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong argument type")));
+    return;
+  }
+
+  // read in the value arguments
   int addr = args[0]->IntegerValue();
   int state = args[1]->IntegerValue();
 
