@@ -1,4 +1,4 @@
-var pwmAddon = require("/usr/bin/pwm-exp-addon");
+var pwmAddon = require("/usr/bin/node-pwm-exp");
 module.exports = function(RED) {
     function PwmNode(config) {
         RED.nodes.createNode(this,config);

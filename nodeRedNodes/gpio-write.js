@@ -1,3 +1,5 @@
+// TODO: reimplement this using the onoff module
+
 var exec = require('child_process').exec;
 module.exports = function(RED) {
     function gpioWrite(config) {
@@ -22,7 +24,7 @@ module.exports = function(RED) {
             } else{
                 exec(cmd2, function(error, stdout, stderr){
                     node.send(returnMsg);
-                });                
+                });
             }
         });
     }

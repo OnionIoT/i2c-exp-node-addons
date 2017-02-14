@@ -1,4 +1,4 @@
-var servoAddon = require("/usr/bin/pwm-exp-addon");
+var servoAddon = require("/usr/bin/node-pwm-exp");
 
 var getTime = function(t1,t2,y1,y2,y){
     var m = (y2-y1)/(t2-t1);

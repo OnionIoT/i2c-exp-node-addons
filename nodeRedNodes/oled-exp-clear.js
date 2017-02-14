@@ -1,9 +1,9 @@
-var oledAddon = require("/usr/bin/oled-exp-addon");
+var oledAddon = require("/usr/bin/node-oled-exp");
 
 module.exports = function(RED) {
     function oledExpClear(config) {
         RED.nodes.createNode(this,config);
-        //Initialize the oled-exp 
+        //Initialize the oled-exp
         oledAddon.init();
         console.log("This should only be displayed once");
         var node = this;

@@ -1,4 +1,4 @@
-var relayAddon = require("/usr/bin/relay-exp-addon");
+var relayAddon = require("/usr/bin/node-relay-exp");
 module.exports = function(RED) {
     function RelayExpNodeWrite(config) {
         RED.nodes.createNode(this,config);

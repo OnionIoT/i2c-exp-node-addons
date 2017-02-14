@@ -1,3 +1,5 @@
+// TODO: reimplement this using the onoff module
+
 var exec = require('child_process').exec;
 module.exports = function(RED) {
     function gpioRead(config) {
