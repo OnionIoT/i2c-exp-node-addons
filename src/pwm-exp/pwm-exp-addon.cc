@@ -7,7 +7,7 @@
 
 
 namespace demo {
-    
+
 using v8::Null;
 using v8::Function;
 using v8::Exception;
@@ -24,10 +24,14 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
     int bInit;
     int ret = pwmCheckInit(&bInit);
-    Local<Function> cb = Local<Function>::Cast(args[0]);
-    const unsigned argc = 1;
-    Local<Value> argv[argc] = { Number::New(isolate, bInit) };
-    cb->Call(Null(isolate), argc, argv);
+
+    // handle (optional) callback argument
+    if (args.Length() > 1) {
+        Local<Function> cb = Local<Function>::Cast(args[0]);
+        const unsigned argc = 1;
+        Local<Value> argv[argc] = { Number::New(isolate, bInit) };
+        cb->Call(Null(isolate), argc, argv);
+    }
     Local<Number> num = Number::New(isolate, bInit);
     args.GetReturnValue().Set(num);
 }
@@ -36,10 +40,14 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
 void driverInit(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
     int ret = pwmDriverInit();
-    Local<Function> cb = Local<Function>::Cast(args[0]);
-    const unsigned argc = 1;
-    Local<Value> argv[argc] = { Number::New(isolate, ret) };
-    cb->Call(Null(isolate), argc, argv);
+
+    // handle (optional) callback argument
+    if (args.Length() > 0) {
+        Local<Function> cb = Local<Function>::Cast(args[0]);
+        const unsigned argc = 1;
+        Local<Value> argv[argc] = { Number::New(isolate, ret) };
+        cb->Call(Null(isolate), argc, argv);
+    }
     Local<Number> num = Number::New(isolate, ret);
     args.GetReturnValue().Set(num);
 }
@@ -48,10 +56,15 @@ void driverInit(const FunctionCallbackInfo<Value>& args) {
 void disableChip(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
     int ret = pwmDisableChip();
-    Local<Function> cb = Local<Function>::Cast(args[0]);
-    const unsigned argc = 1;
-    Local<Value> argv[argc] = { Number::New(isolate, ret) };
-    cb->Call(Null(isolate), argc, argv);
+
+    // handle (optional) callback argument
+    if (args.Length() > 0) {
+        Local<Function> cb = Local<Function>::Cast(args[0]);
+        const unsigned argc = 1;
+        Local<Value> argv[argc] = { Number::New(isolate, ret) };
+        cb->Call(Null(isolate), argc, argv);
+    }
+
     Local<Number> num = Number::New(isolate, ret);
     args.GetReturnValue().Set(num);
 }
@@ -59,11 +72,16 @@ void disableChip(const FunctionCallbackInfo<Value>& args) {
 void setFrequency(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
     double frequency = args[0]->NumberValue();
-    Local<Function> cb = Local<Function>::Cast(args[1]);
-    const unsigned argc = 1;
+
+    // handle (optional) callback argument
+    if (args.Length() > 1) {
+        Local<Function> cb = Local<Function>::Cast(args[1]);
+        const unsigned argc = 1;
+        Local<Value> argv[argc] = { Number::New(isolate, ret) };
+        cb->Call(Null(isolate), argc, argv);
+    }
+
     int ret = pwmSetFrequency(frequency);
-    Local<Value> argv[argc] = { Number::New(isolate, ret) };
-    cb->Call(Null(isolate), argc, argv);
     Local<Number> num = Number::New(isolate, ret);
     args.GetReturnValue().Set(num);
 
@@ -73,11 +91,16 @@ void setupDriver(const FunctionCallbackInfo<Value>& args) {
     int channel = args[0]->IntegerValue();
     double duty = args[1]->NumberValue();
     double delay = args[2]->NumberValue();
-    Local<Function> cb = Local<Function>::Cast(args[3]);
-    const unsigned argc = 1;
+
+    // handle (optional) callback argument
+    if (args.Length() > 1) {
+        Local<Function> cb = Local<Function>::Cast(args[3]);
+        const unsigned argc = 1;
+        Local<Value> argv[argc] = { Number::New(isolate, ret) };
+        cb->Call(Null(isolate), argc, argv);
+    }
+
     int ret = pwmSetupDriver(channel,duty,delay);
-    Local<Value> argv[argc] = { Number::New(isolate, ret) };
-    cb->Call(Null(isolate), argc, argv);
     Local<Number> num = Number::New(isolate, ret);
     args.GetReturnValue().Set(num);
 

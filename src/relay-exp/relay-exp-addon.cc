@@ -118,12 +118,17 @@ void getChannel(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int addr = args[0]->IntegerValue();
   int channel = args[1]->IntegerValue();
-  Local<Function> cb = Local<Function>::Cast(args[2]);
-  const unsigned argc = 1;
+
+
+  // handle (optional) callback argument
+  if (args.Length() > 2) {
+    Local<Function> cb = Local<Function>::Cast(args[2]);
+    const unsigned argc = 1;
+    Local<Value> argv[argc] = { Number::New(isolate, state) };
+    cb->Call(Null(isolate), argc, argv);
+  }
   int state;
   int ret = relayReadChannel(addr,channel,&state);
-  Local<Value> argv[argc] = { Number::New(isolate, state) };
-  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, state);
   args.GetReturnValue().Set(num);
 }
@@ -134,11 +139,16 @@ void setChannel(const FunctionCallbackInfo<Value>& args) {
   int addr = args[0]->IntegerValue();
   int channel = args[1]->IntegerValue();
   int state = args[2]->IntegerValue();
-  Local<Function> cb = Local<Function>::Cast(args[3]);
-  const unsigned argc = 1;
+
+  // handle (optional) callback argument
+  if (args.Length() > 3) {
+    Local<Function> cb = Local<Function>::Cast(args[3]);
+    const unsigned argc = 1;
+    Local<Value> argv[argc] = { Number::New(isolate, ret) };
+    cb->Call(Null(isolate), argc, argv);
+  }
+
   int ret = relaySetChannel(addr,channel,state);
-  Local<Value> argv[argc] = { Number::New(isolate, ret) };
-  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, ret);
   args.GetReturnValue().Set(num);
 }
@@ -147,12 +157,17 @@ void setAllChannels(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   int addr = args[0]->IntegerValue();
   int state = args[1]->IntegerValue();
-  Local<Function> cb = Local<Function>::Cast(args[2]);
-  const unsigned argc = 1;
+
   int ret = relaySetAllChannels(addr,state);
-  Local<Value> argv[argc] = { Number::New(isolate, ret) };
-  cb->Call(Null(isolate), argc, argv);
-  Local<Number> num = Number::New(isolate, ret);
+
+  // handle (optional) callback argument
+  if (args.Length() > 2) {
+    Local<Function> cb = Local<Function>::Cast(args[2]);
+    const unsigned argc = 1;
+    Local<Value> argv[argc] = { Number::New(isolate, ret) };
+    cb->Call(Null(isolate), argc, argv);
+  }
+
   args.GetReturnValue().Set(num);
 }
 
