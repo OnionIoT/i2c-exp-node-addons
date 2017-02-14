@@ -1,4 +1,4 @@
-SUBDIRS = src/Oled_Expansion src/Pwm_Expansion src/Relay_Expansion
+SUBDIRS = src/oled-exp src/pwm-exp src/relay-exp
 all:    subdirs
 .PHONY: subdirs $(SUBDIRS)
 subdirs: $(SUBDIRS)

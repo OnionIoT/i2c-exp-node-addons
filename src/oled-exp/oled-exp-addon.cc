@@ -30,7 +30,7 @@ void oledInit(const FunctionCallbackInfo<Value>& args) {
 	Isolate* isolate = args.GetIsolate();
 	int ret = oledDriverInit();
 
-	Local<Function> callback = Local<Function>::Cast(args[0]);
+	Local<Function> cb = Local<Function>::Cast(args[0]);
 	const unsigned argc = 1;
 	Local<Value> argv[argc] = { Number::New(isolate, ret) };
 	cb->Call(Null(isolate), argc, argv);
@@ -44,10 +44,10 @@ void checkInit(const FunctionCallbackInfo<Value>& args) {
 	Isolate* isolate = args.GetIsolate();
 	int ret = oledCheckInit();
 
-	Local<Function> callback = Local<Function>::Cast(args[0]);
+	Local<Function> cb = Local<Function>::Cast(args[0]);
 	const unsigned argc = 1;
 	Local<Value> argv[argc] = { Number::New(isolate, ret) };
-	callback->Call(Null(isolate), argc, argv);
+	cb->Call(Null(isolate), argc, argv);
 
 	Local<Number> num = Number::New(isolate, ret);
 	args.GetReturnValue().Set(num);
@@ -96,7 +96,7 @@ void setDisplayMode(const FunctionCallbackInfo<Value>& args) {
 	Local<Value> argv[argc] = { Number::New(isolate, ret) };
 	cb->Call(Null(isolate), argc, argv);
 
-	Local<Number> num = Number::New(isolate, a);
+	Local<Number> num = Number::New(isolate, ret);
 	args.GetReturnValue().Set(num);
 }
 
@@ -110,7 +110,7 @@ void setBrightness(const FunctionCallbackInfo<Value>& args) {
 	const unsigned argc = 1;
 	Local<Value> argv[argc] = { Number::New(isolate, ret) };
 	cb->Call(Null(isolate), argc, argv);
-	
+
     Local<Number> num = Number::New(isolate, ret);
     args.GetReturnValue().Set(num);
 }
@@ -151,7 +151,7 @@ void setCursor(const FunctionCallbackInfo<Value>& args) {
     int row = args[0]->IntegerValue();
     int col = args[1]->IntegerValue();
     int ret = oledSetCursor(row, col);
-	
+
 	Local<Function> cb = Local<Function>::Cast(args[2]);
 	const unsigned argc = 1;
 	Local<Value> argv[argc] = { Number::New(isolate, ret) };
@@ -234,7 +234,7 @@ void writeChar(const FunctionCallbackInfo<Value>& args) {
 	Local<Function> cb = Local<Function>::Cast(args[1]);
 	const unsigned argc = 1;
 	Local<Value> argv[argc] = { Number::New(isolate, ret) };
-	cb->Call(Null(isolate), argc, argv); 
+	cb->Call(Null(isolate), argc, argv);
 
     Local<Number> num = Number::New(isolate, ret);
     delete[] writable;
@@ -248,7 +248,7 @@ void write(const FunctionCallbackInfo<Value>& args) {
     char * writable = new char[str.size() + 1];
     std::copy(str.begin(), str.end(), writable);
     writable[str.size()] = '\0';
-    int ret = oledWrite(writable); 
+    int ret = oledWrite(writable);
 
 	Local<Function> cb = Local<Function>::Cast(args[1]);
 	const unsigned argc = 1;
@@ -312,8 +312,8 @@ void scrollDiagonal(const FunctionCallbackInfo<Value>& args) {
     int verticalOffset = args[4]->IntegerValue();
     int startPage = args[5]->IntegerValue();
     int stopPage = args[6]->IntegerValue();
-    int ret = oledScrollDiagonal(direction, scrollSpeed, 
-			fixedRows, scrollRows, verticalOffset, 
+    int ret = oledScrollDiagonal(direction, scrollSpeed,
+			fixedRows, scrollRows, verticalOffset,
 			startPage, stopPage);
 
     Local<Function> cb = Local<Function>::Cast(args[7]);
@@ -367,7 +367,7 @@ void readLcdFile(const FunctionCallbackInfo<Value>& args) {
 	delete[] writable;
 	Local<Number> num = Number::New(isolate, status);
         args.GetReturnValue().Set(num);
-	
+
 }
 
 void readLcdData(const FunctionCallbackInfo<Value>& args) {
@@ -399,7 +399,7 @@ void readLcdData(const FunctionCallbackInfo<Value>& args) {
 	delete[] writable;
 	Local<Number> num = Number::New(isolate, status);
 	args.GetReturnValue().Set(num);
-	
+
 }
 
 void init(Local<Object> exports) {
@@ -410,30 +410,30 @@ void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "init", oledInit);
     NODE_SET_METHOD(exports, "checkInit", checkInit);
     NODE_SET_METHOD(exports, "clear", clear);
-    
+
 //configuration
-    NODE_SET_METHOD(exports, "setDisplayPower", setDisplayPower);	
-    NODE_SET_METHOD(exports, "setDisplayMode", setDisplayMode);	
-    NODE_SET_METHOD(exports, "setBrightness", setBrightness);	
-    NODE_SET_METHOD(exports, "setDim", setDim);	
-    NODE_SET_METHOD(exports, "setMemoryMode", setMemoryMode);	
-    NODE_SET_METHOD(exports, "setCursor", setCursor);	
-    NODE_SET_METHOD(exports, "setCursorByPixel", setCursorByPixel);	
-    NODE_SET_METHOD(exports, "setColumnAddressing", setColumnAddressing);	
-    NODE_SET_METHOD(exports, "setTextColumns", setTextColumns);	
-    NODE_SET_METHOD(exports, "setImageColumns", setImageColumns);	
+    NODE_SET_METHOD(exports, "setDisplayPower", setDisplayPower);
+    NODE_SET_METHOD(exports, "setDisplayMode", setDisplayMode);
+    NODE_SET_METHOD(exports, "setBrightness", setBrightness);
+    NODE_SET_METHOD(exports, "setDim", setDim);
+    NODE_SET_METHOD(exports, "setMemoryMode", setMemoryMode);
+    NODE_SET_METHOD(exports, "setCursor", setCursor);
+    NODE_SET_METHOD(exports, "setCursorByPixel", setCursorByPixel);
+    NODE_SET_METHOD(exports, "setColumnAddressing", setColumnAddressing);
+    NODE_SET_METHOD(exports, "setTextColumns", setTextColumns);
+    NODE_SET_METHOD(exports, "setImageColumns", setImageColumns);
 
 //writing to the display
-    NODE_SET_METHOD(exports, "writeChar", writeChar);	
-    NODE_SET_METHOD(exports, "write", write);		
-    NODE_SET_METHOD(exports, "writeByte", writeByte);	
-    //NODE_SET_METHOD(exports, "draw", draw);	
+    NODE_SET_METHOD(exports, "writeChar", writeChar);
+    NODE_SET_METHOD(exports, "write", write);
+    NODE_SET_METHOD(exports, "writeByte", writeByte);
+    //NODE_SET_METHOD(exports, "draw", draw);
 //scroll the display
-    NODE_SET_METHOD(exports, "scroll", scroll);		
-    NODE_SET_METHOD(exports, "scrollDiagonal", scrollDiagonal);	
-    NODE_SET_METHOD(exports, "scrollStop", scrollStop);	
+    NODE_SET_METHOD(exports, "scroll", scroll);
+    NODE_SET_METHOD(exports, "scrollDiagonal", scrollDiagonal);
+    NODE_SET_METHOD(exports, "scrollStop", scrollStop);
 //reading lcd data
-    NODE_SET_METHOD(exports, "readLcdFile", readLcdFile);	
+    NODE_SET_METHOD(exports, "readLcdFile", readLcdFile);
     NODE_SET_METHOD(exports, "readLcdData", readLcdData);
 
 }

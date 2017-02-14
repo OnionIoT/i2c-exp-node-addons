@@ -18,32 +18,100 @@ using v8::Number;
 using v8::Object;
 using v8::String;
 using v8::Value;
+using v8::Boolean;
 
 
+// NodeJS wrapper for C relayDriverInit() Function
+//  arguments:
+//    address - number - specifies I2C address offset for the Relay Expansion
+//    callback - function (optional)
+//  returns:
+//    true - successfully initialized
+//    false - initialization failed
 void relayInit(const FunctionCallbackInfo<Value>& args) {
+  //// read in the arguments
   Isolate* isolate = args.GetIsolate();
+
+  // Check the number of arguments passed.
+  if (args.Length() < 1) {
+    // Throw an Error that is passed back to JavaScript
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
+
+  // Check the argument types
+  if (!args[0]->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong argument type")));
+    return;
+  }
+
+  // read in the value arguments
   int addr = args[0]->IntegerValue();
+
+  // perform the C library operation
   int ret = relayDriverInit(addr);
-  Local<Function> cb = Local<Function>::Cast(args[1]);
-  const unsigned argc = 1;
-  Local<Value> argv[argc] = { Number::New(isolate, ret) };
-  cb->Call(Null(isolate), argc, argv);
-  Local<Number> num = Number::New(isolate, ret);
-  args.GetReturnValue().Set(num);
+  Local<Number> retVal = Number::New(isolate, ret);
+
+  // handle (optional) callback argument
+  if (args.Length() > 1) {
+    // TODO: ensure cb is actually a function
+    Local<Function> cb = Local<Function>::Cast(args[1]);
+    const unsigned argc = 1;
+    Local<Value> argv[argc] = { retVal };
+    cb->Call(Null(isolate), argc, argv);
+  }
+
+  // return a value
+  args.GetReturnValue().Set(retVal);
 }
 
 
+// NodeJS wrapper for C relayCheckInit() Function
+//  arguments:
+//    address - number - specifies I2C address offset for the Relay Expansion
+//    callback - function (optional)
+//  returns:
+//    false - not initialized
+//    true - initialized
 void checkInit(const FunctionCallbackInfo<Value>& args) {
+  //// read in the arguments
   Isolate* isolate = args.GetIsolate();
+
+  // Check the number of arguments passed.
+  if (args.Length() < 1) {
+    // Throw an Error that is passed back to JavaScript
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
+
+  // Check the argument types
+  if (!args[0]->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "Wrong argument type")));
+    return;
+  }
+
+  // read in the value arguments
   int addr = args[0]->IntegerValue();
+
+  // perform the C library operation
   int bInit;
   int ret = relayCheckInit(addr, &bInit);
-  Local<Function> cb = Local<Function>::Cast(args[1]);
-  const unsigned argc = 1;
-  Local<Value> argv[argc] = { Number::New(isolate, bInit) };
-  cb->Call(Null(isolate), argc, argv);
-  Local<Number> num = Number::New(isolate, bInit);
-  args.GetReturnValue().Set(num);
+  Local<Boolean> retVal = Boolean::New(isolate, bInit == 1 ? true : false );
+
+  // handle (optional) callback argument
+  if (args.Length() > 1) {
+    Local<Function> cb = Local<Function>::Cast(args[1]);
+    const unsigned argc = 1;
+    Local<Value> argv[argc] = { retVal };
+    cb->Call(Null(isolate), argc, argv);
+  }
+
+  // return a value
+  args.GetReturnValue().Set(retVal);
 }
 
 void getChannel(const FunctionCallbackInfo<Value>& args) {
@@ -83,7 +151,7 @@ void setAllChannels(const FunctionCallbackInfo<Value>& args) {
   const unsigned argc = 1;
   int ret = relaySetAllChannels(addr,state);
   Local<Value> argv[argc] = { Number::New(isolate, ret) };
-  cb->Call(Null(isolate), argc, argv);  
+  cb->Call(Null(isolate), argc, argv);
   Local<Number> num = Number::New(isolate, ret);
   args.GetReturnValue().Set(num);
 }
