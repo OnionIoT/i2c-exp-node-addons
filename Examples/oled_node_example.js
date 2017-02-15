@@ -1,58 +1,93 @@
-var oledAddon = require("/usr/bin/oled-exp-addon");
+var oledExp = require("/usr/bin/node-oled-exp");
+
+const EventEmitter = require('events');
+class timer extends EventEmitter {}
+const threeSeconds = new timer();
+
+var functionList = [];
+var currFunction = 0;
+var timeout = 3000;
+
+threeSeconds.on('now', () => {
+	functionList[currFunction]();
+	currFunction++;
+});
 
 //Initialize
-oledAddon.init();
-//wait 3 seconds, write a character
-setTimeout(function(){console.log("Writing a character to display");
-oledAddon.writeChar("X");},3000);
-// wait 3 seconds, invert the colors
-setTimeout(function(){oledAddon.setDisplayMode(1);},6000);
-//wait 3 seconds, dim
-setTimeout(function(){oledAddon.setDim(1);},9000);
-// wait 3 seconds, clear the display
-setTimeout(function(){
-console.log("Clearing the Display");
-oledAddon.clear();},12000);
-//wait 3 seconds, write a message
-setTimeout(function(){oledAddon.write("Invent the Future");},15000);
-//wait 3 seconds, invert the colors to normal
-setTimeout(function(){
-console.log("Inverting Display Back to Normal");
-oledAddon.setDisplayMode(0);},18000);
-//wait 3 seconds, set the highest brightness
-setTimeout(function(){
-console.log("Setting brightness mode to Brightest");
-oledAddon.setBrightness(255);},21000);
-//wait 3 seconds, clear the display
-setTimeout(function(){
-console.log("Clearing the Display");
-oledAddon.clear();},24000);
-//wait 3 seconds, set the cursor by pixel
-setTimeout(function(){
-console.log("Setting the pixel cursor");
-oledAddon.setCursorByPixel(1,64);},27000);
-//wait 3 seconds, draw a few bytes
-setTimeout(	function(){
-	console.log("Drawing a few bytes");
-	oledAddon.writeByte(0x0f);
-	oledAddon.writeByte(0xf0);
-	oledAddon.writeByte(0x0f);
-	oledAddon.writeByte(0xf0);
-	
-			},30000);
-//wait 3 seonds, set the cursor by pixel
-setTimeout(function(){
-console.log("Setting the cursor by pixel");
-oledAddon.setCursorByPixel(1,127);},30000);
-//wait 3 seconds, draw a few bytes
-setTimeout(	function(){
-	console.log("Drawing a few bytes");
-	oledAddon.writeByte(0x0f);
-	oledAddon.writeByte(0xf0);
-	oledAddon.writeByte(0x0f);
-	oledAddon.writeByte(0xf0);
-	
-			},33000);
-			
-setTimeout(function(){console.log("Done");},36000);
+oledExp.init();
 
+// write a character
+functionList.push( () => {
+    console.log("Writing a character to display");
+    oledExp.writeChar("X");
+});
+
+// invert the colors
+
+functionList.push( () => {
+    oledExp.setDisplayMode(1);
+});
+
+// dim
+functionList.push( () => {
+    oledExp.setDim(1);
+});
+
+// clear the display
+functionList.push( () => {
+    console.log("Clearing the Display");
+    oledExp.clear();
+});
+// write a message
+functionList.push( () => {
+    oledExp.write("Invent the Future");
+});
+// invert the colors to normal
+functionList.push( () => {
+    console.log("Inverting Display Back to Normal");
+    oledExp.setDisplayMode(0);
+});
+// set the highest brightness
+functionList.push( () => {
+    console.log("Setting brightness mode to Brightest");
+    oledExp.setBrightness(255);
+});
+// clear the display
+functionList.push( () => {
+    console.log("Clearing the Display");
+    oledExp.clear();
+});
+// set the cursor by pixel
+functionList.push( () => {
+    console.log("Setting the pixel cursor");
+    oledExp.setCursorByPixel(1,64);
+});
+// draw a few bytes
+functionList.push( () => {
+	console.log("Drawing a few bytes");
+	oledExp.writeByte(0x0f);
+	oledExp.writeByte(0xf0);
+	oledExp.writeByte(0x0f);
+	oledExp.writeByte(0xf0);
+});
+// set the cursor by pixel
+functionList.push( () => {
+    console.log("Setting the cursor by pixel");
+    oledExp.setCursorByPixel(1,127);
+});
+// draw a few bytes
+functionList.push(	() => {
+	console.log("Drawing a few bytes");
+	oledExp.writeByte(0x0f);
+	oledExp.writeByte(0xf0);
+	oledExp.writeByte(0x0f);
+	oledExp.writeByte(0xf0);
+});
+
+functionList.push( () => {
+    console.log("Done");
+});
+
+setInterval( () => {
+	threeSeconds.emit('now'); 
+}, timeout);
