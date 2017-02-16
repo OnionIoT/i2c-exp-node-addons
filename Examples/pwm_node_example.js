@@ -1,54 +1,60 @@
 var pwmAddon = require("/usr/bin/pwm-exp-addon");
-
-const EventEmitter = require('events');
-class timer extends EventEmitter {}
-const threeSeconds = new timer();
-
-var functionList = [];
-var currFunction = 0;
 var timeout = 3000;
 
-threeSeconds.on('now', () => {
-	functionList[currFunction]();
-	currFunction++;
-});
+var testDriverInit =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Initializing PWM Expansion");
+			pwm.driverInit( () => {
+				console.log("Initialization returned");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
 
-//Check initialization, Should return 0 if PWM Expansion has just been plugged in
+var testSetupDriver =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Setting Channel 0 to 50% Duty Cycle");
+			pwmAddon.setupDriver(0,50,0, () => {
+				console.log("Driver succesfully set.");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
+		
+var testSetFrequency =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Changing frequency.");
+			pwmAddon.setFrequency(60, () => {
+				console.log("Frequency changed to 60Hz.");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
 
-//setTimeout(function(){
-//console.log("Checking if PWM Expansion is initialized");
-//console.log("checkInit:",pwmAddon.checkInit());
-//},3000);
+var testDisableChip =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Disabling PWM chip.");
+			pwmAddon.disableChip( () => {
+				console.log("PWM disabled.");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
 
+testDriverInit()
+	.then(testSetFrequency)
+	.then(testSetupDriver)
+	.then(testDisableChip)
 
-// initialize the expansion
-functionList.push( () => {
-console.log("Initializing Relay Expansion");
-console.log("driverInit:",pwmAddon.driverInit());
-});
-
-// check initialization, should return 1 since the expansion was just initializaed above. 
-//setTimeout(function(){
-//console.log("Checking if PWM Expansion is initialized");
-//console.log("checkInit:",pwmAddon.checkInit());
-//},9000);
-
-// set channel 0 
-functionList.push( () => {
-console.log("Setting Channel 0 t0 50% Duty Cycle");
-console.log("setupDriver:",pwmAddon.setupDriver(0,50,0));
-});
-// change the frequency
-functionList.push( () => {
-console.log("Change the frequency");
-console.log("setFrequency:",pwmAddon.setFrequency(60));
-});
-// set channel 0
-functionList.push( () => {
-console.log("Setting Channel 0 to 100% Duty Cycle");
-console.log("setupDriver:",pwmAddon.setupDriver(0,100,0));
-});
-
-setInterval( () => {
-	threeSeconds.emit('now'); 
-}, timeout);

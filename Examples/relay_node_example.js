@@ -1,57 +1,75 @@
 var relayAddon = require("/usr/bin/relay-exp-addon");
-
-const EventEmitter = require('events');
-class timer extends EventEmitter {}
-const threeSeconds = new timer();
-
-var functionList = [];
-var currFunction = 0;
 var timeout = 3000;
-
-threeSeconds.on('now', () => {
-	functionList[currFunction]();
-	currFunction++;
-});
 
 var addr=0;
 
+var testCheckInit =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Checking if Relay Expansion is initialized");
+			relayAddon.checkInit(addr, () => {
+				console.log("checked");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
 
-//Wait 3 seconds,check Initialiation, should return 0 if the expansion has just been plugged in
-functionList.push( () => {
-console.log("Checking if Relay Expansion is initialized");
-console.log("checkInit:",relayAddon.checkInit(addr));
-});
+var testInit =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Initializing Relay Expansion");
+			relayAddon.init(addr, () => {
+				console.log("Relay Initialised");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
 
-//Wait 3 seconds,Initialize the relay-exp
-functionList.push( () => {
-console.log("Initializing Relay Expansion");
-console.log("init:",relayAddon.init(addr));
-});
-//Wait 3 seconds, check the initializion, should return 1, since it was just initialized
-functionList.push( () => {
-console.log("Checking if Relay Expansion is initialized");
-console.log("checkInit:",relayAddon.checkInit(addr));
-});
-//Wait 3 seconds, set Channel 0 to On
-functionList.push( () => {
-console.log("Setting Channel 0 to On");
-console.log("setChannel:",relayAddon.setChannel(addr,0,1));
-});
-//Wait 3 seconds, set both channels to On
-functionList.push( () => {
-console.log("Setting Both Channels to On");
-console.log("setAllChannel:",relayAddon.setAllChannels(addr,1));
-});
-//Wait 3 seconds, Set Channel 0 to Off
-functionList.push( () => {
-console.log("Setting Channel 0 to Off");
-console.log("setChannel:",relayAddon.setChannel(addr,0,0));
-});
+var testSetChannelOff =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Setting Channel 0 to On");
+			relayAddon.setChannel(addr,0,1, () => {
+				console.log("Channel 0 on");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
 
-functionList.push( () => {
-console.log("Done!");
-});
+var testSetAllChannelsOn =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Setting Both Channels to On");
+			relayAddon.setAllChannels(addr,1, () => {
+				console.log("All channels on");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
 
-setInterval( () => {
-	threeSeconds.emit('now'); 
-}, timeout);
+var testSetChannelOn =  function () {
+	var promise = new Promise ( function(resolve, reject) {
+		setTimeout( () => {
+			console.log("Setting Channel 0 to Off");
+			relayAddon.setChannel(addr,0,0, () => {
+				console.log("Channel 0 off");
+			});
+			resolve();
+		}, timeout);
+	});
+	return promise;
+};
+
+testCheckInit()
+	.then(testInit)
+	.then(testSetChannelOff)
+	.then(testSetAllChannelsOn)
+	.then(testSetChannelOn)
