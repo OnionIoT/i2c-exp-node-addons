@@ -1,4 +1,4 @@
-var relayAddon = require("/usr/bin/relay-exp-addon");
+var relayExp = require("/usr/bin/node-relay-exp");
 var timeout = 3000;
 
 var addr=0;
@@ -7,7 +7,7 @@ var testCheckInit =  function () {
 	var promise = new Promise ( function(resolve, reject) {
 		setTimeout( () => {
 			console.log("Checking if Relay Expansion is initialized");
-			relayAddon.checkInit(addr, () => {
+			relayExp.checkInit(addr, () => {
 				console.log("checked");
 			});
 			resolve();
@@ -20,7 +20,7 @@ var testInit =  function () {
 	var promise = new Promise ( function(resolve, reject) {
 		setTimeout( () => {
 			console.log("Initializing Relay Expansion");
-			relayAddon.init(addr, () => {
+			relayExp.init(addr, () => {
 				console.log("Relay Initialised");
 			});
 			resolve();
@@ -33,7 +33,7 @@ var testSetChannelOff =  function () {
 	var promise = new Promise ( function(resolve, reject) {
 		setTimeout( () => {
 			console.log("Setting Channel 0 to On");
-			relayAddon.setChannel(addr,0,1, () => {
+			relayExp.setChannel(addr,0,1, () => {
 				console.log("Channel 0 on");
 			});
 			resolve();
@@ -46,7 +46,7 @@ var testSetAllChannelsOn =  function () {
 	var promise = new Promise ( function(resolve, reject) {
 		setTimeout( () => {
 			console.log("Setting Both Channels to On");
-			relayAddon.setAllChannels(addr,1, () => {
+			relayExp.setAllChannels(addr,1, () => {
 				console.log("All channels on");
 			});
 			resolve();
@@ -59,7 +59,7 @@ var testSetChannelOn =  function () {
 	var promise = new Promise ( function(resolve, reject) {
 		setTimeout( () => {
 			console.log("Setting Channel 0 to Off");
-			relayAddon.setChannel(addr,0,0, () => {
+			relayExp.setChannel(addr,0,0, () => {
 				console.log("Channel 0 off");
 			});
 			resolve();
